@@ -49,5 +49,7 @@ public class AboutActivity extends AppCompatActivity {
 
         linkTextView = findViewById(R.id.textViewLink);
         linkTextView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        //test
     }
 }
