@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "288215357744",
+    "project_id": "ict602-project-crowdsourcing",
+    "storage_bucket": "ict602-project-crowdsourcing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288215357744:android:4691e92089095bb9de10f5",
+        "android_client_info": {
+          "package_name": "com.example.ict602_project_crowdsourcing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288215357744-h0pvr342lv4khd0j14vdc9cukl4lj0s2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmgIntFg5XuvIoveOJXDKauHKotra2BW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "288215357744-h0pvr342lv4khd0j14vdc9cukl4lj0s2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
