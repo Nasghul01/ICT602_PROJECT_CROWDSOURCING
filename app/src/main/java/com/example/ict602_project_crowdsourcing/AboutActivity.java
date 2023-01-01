@@ -51,5 +51,6 @@ public class AboutActivity extends AppCompatActivity {
         linkTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
         //test
+        //Hello
     }
 }
