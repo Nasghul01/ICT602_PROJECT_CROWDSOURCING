@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -23,6 +24,7 @@ import com.example.ict602_project_crowdsourcing.databinding.ActivityMapsBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MapsActivity extends FragmentActivity {
 
@@ -32,6 +34,8 @@ public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
+
+    FloatingActionButton btnOpen, btnAdd, btnLogOut, btnRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
