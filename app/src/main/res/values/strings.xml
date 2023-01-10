@@ -1,6 +1,9 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ICT602_PROJECT_CROWDSOURCING</string>
     <string name="title_activity_maps">MapsActivity</string>
 
-    <string name="hyperlink1"><a href="https://www.geeksforgeeks.org/">WWW.GITHUB.COM</a></string>
+    <string name="hyperlink1"><a href="https://github.com/Nasghul01/ICT602_PROJECT_CROWDSOURCING">WWW.GITHUB.COM</a></string>
+
+    <dimen name="design_bottom_navigation_item_max_width" tools:override="true">600dp</dimen>
+    <dimen name="design_bottom_navigation_active_item_max_width" tools:override="true">600dp</dimen>
 </resources>

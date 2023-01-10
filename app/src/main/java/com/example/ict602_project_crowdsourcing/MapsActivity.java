@@ -131,7 +131,7 @@ public class MapsActivity extends FragmentActivity {
                                         //Create marker options
                                 MarkerOptions options = new MarkerOptions()
                                         .position(latLng)
-                                        .title("I am here");
+                                        .title("You are here");
                                         //zoom map scale 15
                                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                                 googleMap.addMarker(options);

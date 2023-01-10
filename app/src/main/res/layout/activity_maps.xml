@@ -15,44 +15,45 @@
         android:layout_alignParentTop="true"
         tools:context=".MapsActivity" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_navigation"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="true">
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="56dp"
+        android:layout_margin="20dp"
         android:backgroundTint="@android:color/holo_green_dark"
         android:clickable="true"
         android:src="@drawable/ic_baseline_add_location_alt_24"
-        map:backgroundTint="@android:color/holo_green_dark"
-        map:layout_constraintBottom_toBottomOf="parent"
-        map:layout_constraintEnd_toEndOf="parent" />
+        map:backgroundTint="@android:color/holo_green_dark"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnLogOut"
+        android:layout_below="@id/btnAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="116dp"
+        android:layout_margin="20dp"
         android:backgroundTint="@android:color/darker_gray"
         android:clickable="true"
         android:src="@drawable/ic_baseline_exit_to_app_24"
-        map:backgroundTint="@android:color/darker_gray"
-        map:layout_constraintBottom_toTopOf="@+id/btnAdd"
-        map:layout_constraintEnd_toEndOf="parent" />
+        map:backgroundTint="@android:color/darker_gray"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnRefresh"
+        android:layout_below="@id/btnLogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="28dp"
+        android:layout_margin="20dp"
         android:backgroundTint="@android:color/darker_gray"
         android:clickable="true"
         android:src="@drawable/ic_baseline_refresh_24"
-        map:backgroundTint="@android:color/darker_gray"
-        map:layout_constraintBottom_toTopOf="@+id/btnAdd"
-        map:layout_constraintEnd_toEndOf="parent" />
+        map:backgroundTint="@android:color/darker_gray"/>
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
