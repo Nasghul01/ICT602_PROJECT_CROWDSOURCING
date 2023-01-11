@@ -1,5 +1,7 @@
 package com.example.ict602_project_crowdsourcing;
 
+import static java.security.AccessController.getContext;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -9,9 +11,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,6 +35,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.Vector;
 
 public class MapsActivity extends FragmentActivity {
 
@@ -34,8 +48,17 @@ public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
+    MarkerOptions marker;
+    Vector<MarkerOptions> markerOptions;
 
-    FloatingActionButton btnOpen, btnAdd, btnLogOut, btnRefresh;
+    FloatingActionButton btnAdd ;
+
+    private String URL = "http://10.0.156.3/maklumat/all.php";
+    RequestQueue requestQueue;
+//    Gson gson;
+    Maklumat[] maklumat;
+
+    Gson gson = new GsonBuilder().create();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +100,7 @@ public class MapsActivity extends FragmentActivity {
         //initialize fused Location
         client = LocationServices.getFusedLocationProviderClient(this);
         //Check permission
+        sendRequest();
         if (ActivityCompat.checkSelfPermission(MapsActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
@@ -134,11 +158,17 @@ public class MapsActivity extends FragmentActivity {
                                         .title("You are here");
                                         //zoom map scale 15
                                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                                googleMap.addMarker(options);
+
+
+                                for (MarkerOptions mark : markerOptions){
+                                    mMap.addMarker(mark);
+                                }
                             }
                         });
                     }
                 });
+
+
         }
 
 
@@ -155,6 +185,50 @@ public class MapsActivity extends FragmentActivity {
 
         }
     };
+    //send request for a success output or error
+    public void sendRequest(){
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,URL,onSuccess,onError);
+        requestQueue.add(stringRequest);
 
+    }
+
+    public Response.Listener<String> onSuccess = new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            maklumat = gson.fromJson(response,Maklumat[].class);
+
+            //this will be displayed on logcat as debug
+            Log.d("Maklumat","Number of Maklumat Data Point: " + maklumat.length);
+
+            if (maklumat.length<1){
+                Toast.makeText(getApplicationContext(),"Problem retrieving JSON data", Toast.LENGTH_LONG).show();
+                return;
+            }
+            for (Maklumat info: maklumat){
+
+                Double lat = Double.parseDouble(info.lat);
+                Double lng = Double.parseDouble(info.lng);
+                String title = info.name;
+                String snippet = info.description;
+
+                MarkerOptions marker = new MarkerOptions().position(new LatLng(lat,lng))
+                        .title(title)
+                        .snippet(snippet);
+
+                mMap.addMarker(marker);
+            }
+        }
+    };
+
+    public Response.ErrorListener onError = new Response.ErrorListener(){
+
+
+        //ERROR MESSAGE
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    };
 
 }
