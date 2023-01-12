@@ -4,11 +4,16 @@ import static java.security.AccessController.getContext;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +33,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.ict602_project_crowdsourcing.databinding.ActivityMapsBinding;
@@ -48,12 +55,12 @@ public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
-    MarkerOptions marker;
+    MarkerOptions marker, options;
     Vector<MarkerOptions> markerOptions;
 
     FloatingActionButton btnAdd ;
 
-    private String URL = "https://nasghul.com/maklumat/all.php";
+    private String URL = "https://bright-commas.000webhostapp.com/public_html/all.php";
     RequestQueue requestQueue;
 //    Gson gson;
     Maklumat[] maklumat;
@@ -100,12 +107,13 @@ public class MapsActivity extends FragmentActivity {
         //initialize fused Location
         client = LocationServices.getFusedLocationProviderClient(this);
         //Check permission
-        sendRequest();
+
         if (ActivityCompat.checkSelfPermission(MapsActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
             //get current location when permission is granted
             getCurrentLocation();
+            sendRequest();
         } else {
             //request permission when permission is denied
             ActivityCompat.requestPermissions(MapsActivity.this,
@@ -156,13 +164,16 @@ public class MapsActivity extends FragmentActivity {
                                 MarkerOptions options = new MarkerOptions()
                                         .position(latLng)
                                         .title("You are here");
+//                                        .icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.ic_baseline_map_24));
+
+
                                         //zoom map scale 15
                                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 
 
-                                for (MarkerOptions mark : markerOptions){
-                                    mMap.addMarker(mark);
-                                }
+//                                for (MarkerOptions mark : markerOptions){
+//                                    mMap.addMarker(mark);
+//                                }
                             }
                         });
                     }
@@ -237,5 +248,14 @@ public class MapsActivity extends FragmentActivity {
     };
 
 
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectoriID){
+        Drawable vectorDrawable  = ContextCompat.getDrawable(context, vectoriID);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap=Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
 
 }
