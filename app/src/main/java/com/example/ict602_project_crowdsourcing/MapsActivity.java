@@ -53,7 +53,7 @@ public class MapsActivity extends FragmentActivity {
 
     FloatingActionButton btnAdd ;
 
-    private String URL = "http://10.0.156.3/maklumat/all.php";
+    private String URL = "https://nasghul.com/maklumat/all.php";
     RequestQueue requestQueue;
 //    Gson gson;
     Maklumat[] maklumat;
@@ -125,7 +125,7 @@ public class MapsActivity extends FragmentActivity {
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
-
+    //get current location
     private void getCurrentLocation() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -172,6 +172,7 @@ public class MapsActivity extends FragmentActivity {
         }
 
 
+        //request permission
     @Override
     public void onRequestPermissionsResult(
             int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -185,7 +186,8 @@ public class MapsActivity extends FragmentActivity {
 
         }
     };
-    //send request for a success output or error
+
+    //send request
     public void sendRequest(){
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET,URL,onSuccess,onError);
@@ -193,6 +195,8 @@ public class MapsActivity extends FragmentActivity {
 
     }
 
+
+    //onsuccess request
     public Response.Listener<String> onSuccess = new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
@@ -221,8 +225,9 @@ public class MapsActivity extends FragmentActivity {
         }
     };
 
-    public Response.ErrorListener onError = new Response.ErrorListener(){
 
+    //onError request
+    public Response.ErrorListener onError = new Response.ErrorListener(){
 
         //ERROR MESSAGE
         @Override
@@ -230,5 +235,7 @@ public class MapsActivity extends FragmentActivity {
             Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
         }
     };
+
+
 
 }
